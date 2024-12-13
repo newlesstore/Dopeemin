@@ -58,3 +58,23 @@ export async function getTvsByCategory(req, res) {
 		res.status(500).json({ success: false, message: "Internal Server Error" });
 	}
 }
+
+export async function getTvPerEps(req, res) {
+	const { id, season, eps } = req.params;
+	try {
+		const data = await fetchFromTMDB(`https://api.themoviedb.org/3/tv/${id}/season/${season}/episode/${eps}?language=en-US`);
+		res.status(200).json({ success: true, content: data });
+	} catch (error) {
+		res.status(500).json({ success: false, message: "Internal Server Error" });
+	}
+}
+
+export async function getTvPerSeason(req, res) {
+	const { id, season } = req.params;
+    try {
+        const data = await fetchFromTMDB(`https://api.themoviedb.org/3/tv/${id}/season/${season}?language=en-US`);
+        res.status(200).json({ success: true, content: data });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Internal Server Error" });
+    }
+}

@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useContentStore } from "../store/content";
 import axios from "axios";
 import Navbar from "../components/Navbar";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Play } from "lucide-react";
 import ReactPlayer from "react-player";
 import { ORIGINAL_IMG_BASE_URL, SMALL_IMG_BASE_URL } from "../utils/constants";
 import { formatReleaseDate } from "../utils/dateFunction";
@@ -17,8 +17,20 @@ const WatchPage = () => {
 	const [content, setContent] = useState({});
 	const [similarContent, setSimilarContent] = useState([]);
 	const { contentType } = useContentStore();
-
 	const sliderRef = useRef(null);
+	const navigate = useNavigate();
+	
+	const handlePlay = async (e) => {
+		e.preventDefault();
+		try {
+			if(contentType === "movie"){
+				return navigate(`/watch-now/${content?.id}/play/${content?.title || content.name}`);
+			}
+			navigate(`/watch-now/${id}/play/${content?.title || content?.name}/season/1/episode/1`);
+		} catch (error) {
+			console.log(error)
+		}
+	}
 
 	useEffect(() => {
 		const getTrailers = async () => {
@@ -170,6 +182,14 @@ const WatchPage = () => {
 							)}{" "}
 						</p>
 						<p className='mt-4 text-lg'>{content?.overview}</p>
+						<Link 
+						onClick={handlePlay}
+						className="bg-white/50 hover:bg-transparent text-black font-semibold px-4 py-2 rounded-md flex h-full w-fit gap-2 items-center cursor-pointer hover:text-emerald-400 mt-5" >
+							<Play />
+							<h1>
+								play
+							</h1>
+						</Link>
 					</div>
 					<img
 						src={ORIGINAL_IMG_BASE_URL + content?.poster_path}

@@ -11,6 +11,8 @@ import { Loader } from "lucide-react";
 import SearchPage from "./pages/SearchPage";
 import SearchHistoryPage from "./pages/SearchHistoryPage";
 import NotFoundPage from "./pages/404";
+import PlayMovie from "./pages/playStream/PlayMovie";
+import PlayTv from "./pages/playStream/PlayTv";
 
 function App() {
 	const { user, isCheckingAuth, authCheck } = useAuthStore();
@@ -36,6 +38,9 @@ function App() {
 				<Route path='/login' element={!user ? <LoginPage /> : <Navigate to={"/"} />} />
 				<Route path='/signup' element={!user ? <SignUpPage /> : <Navigate to={"/"} />} />
 				<Route path='/watch/:id' element={user ? <WatchPage /> : <Navigate to={"/login"} />} />
+				<Route path='/watch-now/:id/play/:title' element={ <PlayMovie />} />
+				<Route path='/watch-now/:id/play/:title/season/:season/episode/:eps' element={ <PlayTv />} />
+
 				<Route path='/search' element={user ? <SearchPage /> : <Navigate to={"/login"} />} />
 				<Route path='/history' element={user ? <SearchHistoryPage /> : <Navigate to={"/login"} />} />
 				<Route path='/*' element={<NotFoundPage />} />
