@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import WatchPageSkeleton from "../../components/skeletons/WatchPageSkeleton";
 import Navbar from "../../components/Navbar";
-import { SMALL_IMG_BASE_URL } from "../../utils/constants";
+import { ORIGINAL_IMG_BASE_URL } from "../../utils/constants";
 import { useContentStore } from "../../store/content";
 import { formatReleaseDate } from "../../utils/dateFunction";
 
@@ -131,21 +131,36 @@ const PlayTv = () => {
             <p className='mt-4 text-lg'>{content?.overview}</p>  
           </div>
 
-          <div className="px-4 py-8 mt-12 w-full overflow-hidden flex flex-col">
-            <h2 className="text-2xl font-bold text-center bg-emerald-500 rounded-lg">
-              Episodes
-            </h2>
-            <div className="flex flex-col justify-center text-lg text-gray-500 pt-5">
-              {ContentPerSeason?.episodes?.map((item) => (
-                <Link 
-                key={item?.id} 
-                to={`/watch-now/${content.id}/play/${item?.name}/season/${item?.season_number}/episode/${item?.episode_number}`}
-                className="text-white bg-gray-500 rounded-lg m-1 p-2">
-                  {item?.name}
-                </Link>
-              ))}
+          {ContentPerSeason?.episodes?.length > 0 && (
+            <div className="px-4 py-8 mt-12 w-full overflow-hidden flex flex-col">
+              <h2 className="text-2xl font-bold text-center bg-emerald-500 rounded-lg">
+                Episodes
+              </h2>
+              <div className="flex justify-center flex-wrap text-lg text-gray-500 pt-5">
+                {ContentPerSeason?.episodes?.map((item) => (
+                  <Link 
+                  key={item?.id} 
+                  to={`/watch-now/${content.id}/play/${item?.name}/season/${item?.season_number}/episode/${item?.episode_number}`}
+                  className="text-white rounded-lg m-1 p-2 max-w-xl flex gap-2 mt-5">
+                    <img 
+                    src={ORIGINAL_IMG_BASE_URL + item?.still_path}
+                    className="w-1/2 rounded-lg" />
+                    <div className="flex flex-col">
+                      <h1 className="font-bold text-base">
+                        {item?.name}
+                      </h1>
+                      <p className="text-base text-gray-500">
+                      {formatReleaseDate(item?.release_date || item?.air_date)} |{" "}
+                      </p>
+                      <p className="text-sm">
+                      {item?.overview.length > 85 ? item?.overview.slice(0, 85) + "..." : item?.overview}
+                      </p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           {contentPerEps?.guest_stars?.length > 0 && (
             <div className='mt-12 max-w-5xl mx-auto relative'>
@@ -157,7 +172,7 @@ const PlayTv = () => {
                   return (
                     <div key={content.id} className='w-40 flex-none'>
                       <img
-                        src={SMALL_IMG_BASE_URL + content.profile_path}
+                        src={ORIGINAL_IMG_BASE_URL + content.profile_path}
                         alt='Poster path'
                         className='w-full h-auto rounded-md'
                       />
