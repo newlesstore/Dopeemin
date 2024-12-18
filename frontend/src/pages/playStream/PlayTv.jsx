@@ -104,7 +104,7 @@ const PlayTv = () => {
         <div className='flex flex-col items-center w-full'>
           <div className='container mx-auto max-w-2xl'>
             <iframe
-              src={`https://vidlink.pro/tv/${id}/${season}/${eps}`}
+              src={`https://vidlink.pro/tv/${id}/${season}/${eps}?primaryColor=63b8bc&secondaryColor=a2a2a2&iconColor=eefdec&icons=default&player=default&title=true&poster=true&autoplay=false&nextbutton=false`}
               frameBorder="0"
               allowFullScreen
               className="w-full h-[50vh] md:h-[60vh] lg:h-[70vh] rounded-lg"

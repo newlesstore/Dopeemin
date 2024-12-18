@@ -42,7 +42,7 @@ const MovieList = ({ category }) => {
 
   return (
     <>
-    <h2 className=" bg-black text-3xl text-center font-bold text-white pb-8 pt-20">Trending Movie and Tv Show</h2>
+    <h2 className=" bg-black text-3xl text-center font-bold text-white pb-8 pt-20">Update Movies and Tvs</h2>
     <motion.div
       initial={{ opacity: 0, x: -50 }}
       animate={{ opacity: 1, x: 0 }}

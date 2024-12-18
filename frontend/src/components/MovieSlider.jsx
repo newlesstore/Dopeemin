@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useContentStore } from "../store/content";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { SMALL_IMG_BASE_URL } from "../utils/constants";
+import { ORIGINAL_IMG_BASE_URL } from "../utils/constants";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const MovieSlider = ({ category }) => {
@@ -49,7 +49,7 @@ const MovieSlider = ({ category }) => {
 					<Link to={`/watch/${item.id}`} className='min-w-[250px] relative group' key={item.id}>
 						<div className='rounded-lg overflow-hidden'>
 							<img
-								src={SMALL_IMG_BASE_URL + item.poster_path}
+								src={ORIGINAL_IMG_BASE_URL + item.poster_path}
 								alt='Movie image'
 								className='transition-transform duration-300 ease-in-out group-hover:scale-125'
 							/>

@@ -25,7 +25,7 @@ const HomeScreen = () => {
 
 	return (
 		<>
-			<div className='relative h-screen text-white '>
+			<div className='relative h-screen'>
 				<Navbar />
 
 				{/* COOL OPTIMIZATION HACK FOR IMAGES */}
@@ -46,11 +46,11 @@ const HomeScreen = () => {
 
 				<div className='absolute top-0 left-0 w-full h-full flex flex-col justify-center px-8 md:px-16 lg:px-32'>
 					<div
-						className='bg-gradient-to-b from-black via-transparent to-transparent 
+					className='bg-gradient-to-b from-black via-transparent to-transparent 
 					absolute w-full h-full top-0 left-0 -z-10'
 					/>
 
-					<div className='max-w-2xl'>
+					<div className='max-w-2xl text-white'>
 						<h1 className='mt-4 text-6xl font-extrabold text-balance'>
 							{trendingContent?.title || trendingContent?.name}
 						</h1>
@@ -94,13 +94,13 @@ const HomeScreen = () => {
 					: TV_CATEGORIES.map((category) => <MovieSlider key={category} category={category} />)}
 			</div>
 			<main>
-          {contentType === "movie"
-            ? MOVIE_LIST.map((category) => (
-                <MovieList key={category} category={category} />
-              ))
-            : TV_LIST.map((category) => (
-                <MovieList key={category} category={category} />
-              ))}
+				{contentType === "movie"
+					? MOVIE_LIST.map((category) => (
+						<MovieList key={category} category={category} />
+					))
+					: TV_LIST.map((category) => (
+						<MovieList key={category} category={category} />
+					))}
         </main>
 		</>
 	);

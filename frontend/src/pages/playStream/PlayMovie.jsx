@@ -84,7 +84,7 @@ const PlayMovie = () => {
         <div className='flex flex-wrap w-full'>
           {/* video */}
           <div className='mx-auto container max-w-2xl'>
-			<iframe src={`https://vidlink.pro/movie/${content?.id}`}frameBorder="0" allowfullscreen
+			<iframe src={`https://vidlink.pro/movie/${content?.id}primaryColor=63b8bc&secondaryColor=a2a2a2&iconColor=eefdec&icons=default&player=default&title=true&poster=true&autoplay=false&nextbutton=false`} frameBorder="0" allowFullScreen
 			className="w-full h-[580px] lg:w-[720px] lg:h-[480px]"
 			></iframe>
           </div>
