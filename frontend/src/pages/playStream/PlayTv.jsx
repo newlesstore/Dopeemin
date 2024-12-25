@@ -14,6 +14,7 @@ const PlayTv = () => {
   const [content, setContent] = useState({});
   const [contentPerEps, setContentPerEps] = useState([]);
   const [ContentPerSeason, setContentPerSeason] = useState([]);
+  const [visible, setVisible] = useState(4);
   const { contentType } = useContentStore();
   const sliderRef = useRef(null);
   
@@ -97,6 +98,10 @@ const PlayTv = () => {
     if (sliderRef.current) sliderRef.current.scrollBy({ left: sliderRef.current.offsetWidth, behavior: "smooth" });
   };
 
+  const loadMore = () => {
+    setVisible((preView) => preView + ContentPerSeason.episodes.length)
+  };
+
   return (
     <>
       <div className='text-white bg-black h-auto overflow-hidden'>
@@ -104,7 +109,7 @@ const PlayTv = () => {
         <div className='flex flex-col items-center w-full'>
           <div className='container mx-auto max-w-2xl'>
             <iframe
-              src={`https://vidlink.pro/tv/${id}/${season}/${eps}?primaryColor=63b8bc&secondaryColor=a2a2a2&iconColor=eefdec&icons=default&player=default&title=true&poster=true&autoplay=false&nextbutton=false`}
+              src={`https://vidlink.pro/tv/${id}/${season}/${eps}?primaryColor=63b8bc&secondaryColor=a2a2a2&iconColor=eefdec&icons=vid&player=default&title=true&poster=true&autoplay=true&nextbutton=true`}
               frameBorder="0"
               allowFullScreen
               className="w-full h-[50vh] md:h-[60vh] lg:h-[70vh] rounded-lg"
@@ -128,16 +133,19 @@ const PlayTv = () => {
                 <span className='text-green-600'>PG-13</span>
               )}
             </p>
-            <p className='mt-4 text-lg'>{content?.overview}</p>  
+            <p className='mt-4 text-lg'>{content?.overview}</p> 
+
           </div>
 
-          {ContentPerSeason?.episodes?.length > 0 && (
+          {ContentPerSeason?.episodes?.length > 4 && (
             <div className="px-4 py-8 mt-12 w-full overflow-hidden flex flex-col">
               <h2 className="text-2xl font-bold text-center bg-emerald-500 rounded-lg">
-                Episodes
+                season 1
               </h2>
               <div className="flex justify-center flex-wrap text-lg text-gray-500 pt-5">
-                {ContentPerSeason?.episodes?.map((item) => (
+                {ContentPerSeason?.episodes?.slice(0, visible).map((item) => {
+                  if (item?.still_path === null) return null;
+                  return (
                   <Link 
                   key={item?.id} 
                   to={`/watch-now/${content.id}/play/${item?.name}/season/${item?.season_number}/episode/${item?.episode_number}`}
@@ -157,7 +165,19 @@ const PlayTv = () => {
                       </p>
                     </div>
                   </Link>
-                ))}
+                  );
+                })}
+                <div>
+                  
+                </div>
+                <button
+                onClick={loadMore}
+                className="bg-gradient-to-t from-slate-400/10 to-transparent w-full py-6 rounded-lg -translate-y-8">
+                  <h1 className="pt-12"
+                  >
+                    {ContentPerSeason?.episodes.length < 4 ? null : <span className="">Load More</span>}
+                  </h1>
+                </button>
               </div>
             </div>
           )}
