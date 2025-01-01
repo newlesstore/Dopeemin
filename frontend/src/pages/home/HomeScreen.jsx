@@ -2,20 +2,18 @@ import { Link } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import { Info, Play } from "lucide-react";
 import useGetTrendingContent from "../../hooks/useGetTrendingContent";
-import { MOVIE_CATEGORIES, MOVIE_LIST, ORIGINAL_IMG_BASE_URL, TV_CATEGORIES, TV_LIST } from "../../utils/constants";
+import { MOVIE_CATEGORIES, MOVIE_LIST, SMALL_IMG_BASE_URL, TV_CATEGORIES, TV_LIST } from "../../utils/constants";
 import { useContentStore } from "../../store/content";
 import MovieSlider from "../../components/MovieSlider";
 import { useState } from "react";
 import MovieList from "../../components/MovieList";
-import { useAuthStore } from "../../store/authUser";
 
 const HomeScreen = () => {
 	const { trendingContent } = useGetTrendingContent();
 	const { contentType } = useContentStore();
 	const [imgLoading, setImgLoading] = useState(true);
-	const { user } = useAuthStore();
 
-	if (!trendingContent || !user)
+	if (!trendingContent)
 		return (
 			<div className='h-screen text-white relative'>
 				<Navbar />
@@ -34,7 +32,7 @@ const HomeScreen = () => {
 				)}
 
 				<img
-					src={ORIGINAL_IMG_BASE_URL + trendingContent?.backdrop_path}
+					src={SMALL_IMG_BASE_URL + trendingContent?.backdrop_path}
 					alt='Hero img'
 					className='absolute top-0 left-0 w-full h-full object-cover -z-50'
 					onLoad={() => {
